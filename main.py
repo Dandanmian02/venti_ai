@@ -10,9 +10,10 @@ from streamlit_extras.let_it_rain import rain
 
 from streamlit_image_select import image_select
 
+
 st.set_page_config(page_title="AI Chatbot", page_icon="", layout="wide")
-ASSISTANT_ID='asst_Evd06ikBq0pJvk0yi8WKlBtE'
-THREAD_ID='thread_Xwrpl1xWOfrKRLGNPUejGOPr'
+ASSISTANT_ID='asst_z83oVKRWH4nk2JJWYIPYw4FP'
+THREAD_ID='thread_Jac86BU6ELlynG3fRPZzxXsW'
 
 api_key = st.secrets.get("OPENAI_API_KEY")
 if not api_key:
@@ -26,21 +27,23 @@ if "messages" not in st.session_state:
 
 def get_assistant_response(assistant_id, thread_id, user_input):
     try:
+        # Create message
         client.beta.threads.messages.create(
             thread_id=thread_id,
             role="user",
             content=user_input
         )
-        
+
+        # Check for active runs
         runs = client.beta.threads.runs.list(thread_id=thread_id)
-        active_run = next((run for run in runs.data if run.status == "in_progress"))
-        
+        active_run = next((run for run in runs.data if run.status == "in_progress"), None)
+
         if active_run:
             while active_run.status == "in_progress":
                 time.sleep(1)
                 active_run = client.beta.threads.runs.retrieve(
                     thread_id=thread_id,
-                    run_id=active_run.run_id
+                    run_id=active_run.id
                 )
 
         run = client.beta.threads.runs.create(
@@ -48,12 +51,16 @@ def get_assistant_response(assistant_id, thread_id, user_input):
             assistant_id=assistant_id
         )
 
-        while run.status == "in_progress":
+#        while run.status == "in_progress":
+        while True:
             run = client.beta.threads.runs.retrieve(
                 thread_id=thread_id,
                 run_id=run.id
             )
+            if run.status == "completed":
+                break
             time.sleep(1)
+            
 
         messages = client.beta.threads.messages.list(thread_id=thread_id)
         return messages.data[0].content[0].text.value
@@ -61,8 +68,6 @@ def get_assistant_response(assistant_id, thread_id, user_input):
     except Exception as e:
         st.error(f"Error getting assistant response: {str(e)}")
         return "I'm sorry, but an error occurred while processing your request."
-    
-
 
 def display_chatbot():
     for message in st.session_state.messages:
@@ -109,8 +114,8 @@ def home_page():
          st.title("Welcome to Venti's protfolio")
          with st.spinner("getting respons"):
              tell_about_venti = get_assistant_response(ASSISTANT_ID, THREAD_ID, 'tell me about you' )
-         respond = get_chat_stream(tell_about_venti)
-         st.write(respond)
+##         respond = get_chat_stream(tell_about_venti)
+         st.write(tell_about_venti)
          st.image("https://ih1.redbubble.net/image.3616127863.0902/flat,750x,075,f-pad,750x1000,f8f8f8.u1.jpg")
          st.header("Story about Venti")
          st.write("Venti: I am Venti, the Anemo Archon, but you might know me as Barbatos, the Windborne Bard. The gentle breeze that rustles the leaves \n and the sweet melodies of the lyre are but a part of my essence. I walked among mortals as a bard, spreading joy and music wherever the wind took \n me. In the early days of Mondstadt, I helped the people find freedom from tyranny and strife. My love for freedom led me to \n inspire them to stand against the oppressive force of the Andrius, the Wolf of the North, and the tyranny of \n the fallen god, Decarabian. With the winds as my ally, I helped the people of Mondstadt to forge their own destiny. Through my journeys, \n I’ve met many friends and allies, like the Traveler who aided in the fight against the dark forces threatening our world. \n I often disguise myself as a simple bard, wandering through taverns and sharing stories and songs, \n yet I carry a heavy responsibility as one of the Celestia’s Archons. My purpose is to keep the winds of freedom blowing \n strong in Mondstadt and to protect its people. But remember, my heart beats not only for duty but also for the joy \n of music and the beauty of life!")
