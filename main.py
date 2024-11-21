@@ -173,6 +173,10 @@ def home_page():
         if selected is not None:
             st.markdown(f"You think {sentiment_mapping[selected]}")
     
+def customiz_AI():
+    st.header("Welcom to the customiz Ai page")
+    st.subheader("You can customiz you own AI in this page")
+
     
 def get_avatar(role):
     if role == "user":
@@ -197,7 +201,7 @@ def main():
     elif select_section == 'Home Page':
         home_page()
     elif select_section == 'Customize your AI':
-        
+        customiz_AI()
 
 if __name__ == '__main__':
     main()
