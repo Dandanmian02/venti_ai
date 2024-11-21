@@ -6,6 +6,8 @@ import time
 
 import os
 
+from Project_Environment import create_assistant, create_thread
+
 from streamlit_extras.let_it_rain import rain
 
 from streamlit_image_select import image_select
@@ -176,8 +178,11 @@ def home_page():
 def customiz_AI():
     st.header("Welcom to the customiz Ai page")
     st.subheader("You can customiz you own AI in this page")
-    name_1 = st.text_input("Please enter the name for your AI", "Venti")
-    instructions_1 = st.text_input("Please enter the instructions for your AI", "You are Venti from genshin impact")
+    name = st.text_input("Please enter the name for your AI", "Venti")
+    instructions = st.text_input("Please enter the instructions for your AI", "You are Venti from genshin impact")
+    assisatant_id = create_assistant(name, instructions)
+    thread_id = create_thread()
+    st.info(assistant_id, thread_id)
 
     
 def get_avatar(role):
