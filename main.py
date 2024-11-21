@@ -176,6 +176,8 @@ def home_page():
 def customiz_AI():
     st.header("Welcom to the customiz Ai page")
     st.subheader("You can customiz you own AI in this page")
+    name_1 = st.text_input("Please enter the name for your AI", "Venti")
+    instructions_1 = st.text_input("Please enter the instructions for your AI", "You are Venti from genshin impact")
 
     
 def get_avatar(role):
