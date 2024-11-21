@@ -180,8 +180,10 @@ def customiz_AI():
     st.subheader("You can customiz you own AI in this page")
     name = st.text_input("Please enter the name for your AI", "Venti")
     instructions = st.text_input("Please enter the instructions for your AI", "You are Venti from genshin impact")
-    assistant_id = create_assistant(name, instructions)
-    thread_id = create_thread()
+    assistant = create_assistant(name, instructions)
+    thread = create_thread()
+    assistant_id = assistant.id
+    thread_id = thread.id
 ##    st.info(f'{assistant_id}, {thread_id}')
     tell_about_you = get_assistant_response(assistant_id, thread_id, 'tell me about you' )
 
