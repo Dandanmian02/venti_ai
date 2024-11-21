@@ -196,6 +196,8 @@ def main():
         display_chatbot()
     elif select_section == 'Home Page':
         home_page()
+    elif select_section == 'Customize your AI':
+        
 
 if __name__ == '__main__':
     main()
