@@ -2,19 +2,17 @@ import streamlit as st
 
 import openai
 
-from dotenv import load_dotenv
-
 import os
 
 #set up OpenAI client
 api_key = st.secrets.get("OPEN_API_KEY")
 client = openai.OpenAI(api_key=api_key)
 
-def create_assistant():
+def create_assistant(name, instructions):
     try:
         assistant = client.beta.assistants.create(
-            name="Venti AI",
-            instructions="You are Venti from Genshin impact",
+            name=name,
+            instructions=instructions,
             tools=[{"type": "code_interpreter"}],
             model="gpt-4o-mini"
         )
