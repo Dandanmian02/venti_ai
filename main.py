@@ -186,6 +186,8 @@ def customiz_AI():
     thread_id = thread.id
 ##    st.info(f'{assistant_id}, {thread_id}')
     tell_about_you = get_assistant_response(assistant_id, thread_id, 'tell me about you' )
+    respond = get_chat_stream(tell_about_you)
+    st.write(respond)
 
     
 def get_avatar(role):
