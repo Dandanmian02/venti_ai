@@ -118,7 +118,7 @@ def home_page():
     img = image_select("Select a image", ["./images/venti.png", "./images/paimeng.png", "./images/yin.png"], use_container_width=False)
     if img == "./images/venti.png":
          st.title("Welcome to Venti's protfolio")
-         with st.spinner("getting respons"):
+         with st.spinner("getting response"):
              tell_about_venti = get_assistant_response(ASSISTANT_ID_4, THREAD_ID_4, 'tell me about you' )
 ##         respond = get_chat_stream(tell_about_venti)
          st.write(tell_about_venti)
@@ -136,7 +136,7 @@ def home_page():
          st.image("./images/total cost_1.png")
     elif img == "./images/paimeng.png":
         st.title("Welcom to Paimon's protflio")
-        with st.spinner("getting respons"):
+        with st.spinner("getting response"):
             tell_about_paimon = get_assistant_response(ASSISTANT_ID_2, THREAD_ID_2, 'tell me about Paimon' )
         respond = get_chat_stream(tell_about_paimon)
         st.write(respond)
@@ -156,7 +156,7 @@ def home_page():
 
     elif img == "./images/yin.png":
         st.title("Welcom to Lumine's protflio")
-        with st.spinner("getting respons"):
+        with st.spinner("getting response"):
             tell_about_yin = get_assistant_response(ASSISTANT_ID_3, THREAD_ID_3, 'tell me about Lumine')
         respond = get_chat_stream(tell_about_yin)
         st.write(respond)
@@ -190,7 +190,7 @@ def get_avatar(role):
 def main():
     with st.sidebar:
         st.subheader('About Venti')
-    sections = ['Home Page', 'Talk to Venti']
+    sections = ['Home Page', 'Talk to Venti', 'Customize your AI']
     select_section = st.sidebar.radio('choose a section',sections)
     if select_section == 'Talk to Venti':
         display_chatbot()
