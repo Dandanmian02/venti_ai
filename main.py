@@ -182,7 +182,7 @@ def customiz_AI():
     instructions = st.text_input("Please enter the instructions for your AI", "You are Venti from genshin impact")
     assistant_id = create_assistant(name, instructions)
     thread_id = create_thread()
-    st.info(assistant_id, thread_id)
+    st.info(f'{assistant_id}, {thread_id}')
 
     
 def get_avatar(role):
