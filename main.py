@@ -177,7 +177,7 @@ def home_page():
     
 def customiz_AI():
     st.header("Welcom to the customiz Ai page")
-    st.subheader("You can customiz you own AI in this page")
+    st.warning("You can customiz you own AI in this page")
     name = st.text_input("Please enter the name for your AI", "Venti")
     instructions = st.text_input("Please enter the instructions for your AI", "You are Venti from genshin impact")
     assistant = create_assistant(name, instructions)
